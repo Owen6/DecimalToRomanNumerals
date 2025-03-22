@@ -1,6 +1,7 @@
 const inputValue = document.getElementById('number');
 const convertButton = document.getElementById('convert-btn');
 const output = document.getElementById('output');
+const original = document.getElementById('original');
 const outputLabel = document.getElementById('output-label');
 
 const romanValues = [
@@ -21,52 +22,60 @@ const convertRoman = (number, iter=0) => {
   }
 }
 
-//clean up later
 const decimalToRoman = (number) => {
   const arrayValues = convertRoman(number).split(" ").slice(0,7).map(Number);
   console.log(arrayValues)
   const convertedArray = [];
   arrayValues.forEach((item,index,arr)=>{
-    if(item === 0 && arr[index+1] > 3){
-      console.log('1');
-      convertedArray.push(romanValues[index+1].name, romanValues[index].name);
-      item = 0;
-      arr[index+1] = 0;
-    }else if(item > 0 && arr[index+1] > 3){
-      console.log('2');
-      convertedArray.push(romanValues[index+1].name, romanValues[index-1].name);
+    if(arr[index+1] > 3){
+      switch(item){
+        case 0: 
+          convertedArray.push(romanValues[index+1].name, romanValues[index].name);
+          break;
+        default:
+          convertedArray.push(romanValues[index+1].name, romanValues[index-1].name);
+          break;
+      }
       item = 0;
       arr[index+1] = 0;
     }else if(item !== 0){
-      console.log('3');
       convertedArray.push(romanValues[index].name.repeat(item));
-    }else{
-      console.log('skipped')
     }
   })
   return convertedArray.join('');
 }
 
-//change logs to change innerText of #output
 const checkInput = () => {
   const inputVal = parseInt(inputValue.value);
+
+  original.innerText = "";
+  output.innerText = "";
+
   if(!inputValue.value || isNaN(inputVal)){
-    console.log("Please enter a valid number")
+    //console.log("Please enter a valid number")
+    output.innerText = "Please enter a valid number";
     return NaN;
   }else if(inputVal <= 0){
-    console.log("Please enter a number greater than or equal to 1");
+    output.innerText = "Please enter a number greater than or equal to 1";
     return null;
   }else if(inputVal >= 4000){
-    console.log("Please enter a number less than or equal to 3999");
+    output.innerText = "Please enter a number less than or equal to 3999";
     return null;
   }else{
-    return decimalToRoman(inputVal);
+    original.innerText = inputValue.value;
+    output.innerText = decimalToRoman(inputVal);
+    inputValue.value = "";
+    return true;
   }
 }
-//console.log(decimalToRoman(3456))
 
 convertButton.addEventListener('click', ()=>{
   console.log(checkInput());
 })
 
 //add Event listener to submit when enter is pressed
+inputValue.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    checkInput();
+  }
+})
