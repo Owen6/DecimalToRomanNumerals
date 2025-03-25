@@ -3,20 +3,23 @@
   <head>
     <meta charset="utf-8"/>
     <title>Roman Numeral Converter</title>
-    <meta href="styles.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <h1>Decimal to Roman Numeral Converter</h1>
     <section id="input-field">
-      <label for="number">Enter a Number:</label>
+      <label for="number">Enter a Number</label>
       <input id="number" type="number">
       <button id="convert-btn" type="submit">Convert</button>
     </section>
-    <section class="output-field">
-      <label id="output-label" class="hidden"><span class="left">Original</span><span class="right">Converted</span></label>
-      <span id="original"></span>
-      <span id="output"></span>
+    <section id="output-field" class="hidden">
+      <label class="output-line" id="output-label"><span class="left">Original</span><span class="right">Converted</span></label>
+      <hr>
+      <div class="output-line">
+        <span id="original"></span>
+        <span id="output"></span>
+      </div>
     </section>
   </body>
   <script src="script.js"></script>

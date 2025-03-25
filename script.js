@@ -2,6 +2,8 @@ const inputValue = document.getElementById('number');
 const convertButton = document.getElementById('convert-btn');
 const output = document.getElementById('output');
 const original = document.getElementById('original');
+const outputField = document.getElementById('output-field');
+const originalLine = document.getElementById('original');
 const outputLabel = document.getElementById('output-label');
 
 const romanValues = [
@@ -46,6 +48,10 @@ const decimalToRoman = (number) => {
 }
 
 const checkInput = () => {
+  outputField.classList.remove('hidden');
+  originalLine.classList.add('hidden');
+  outputLabel.classList.add('hidden');
+
   const inputVal = parseInt(inputValue.value);
 
   original.innerText = "";
@@ -62,6 +68,8 @@ const checkInput = () => {
     output.innerText = "Please enter a number less than or equal to 3999";
     return null;
   }else{
+    originalLine.classList.remove('hidden');
+    outputLabel.classList.remove('hidden');
     original.innerText = inputValue.value;
     output.innerText = decimalToRoman(inputVal);
     inputValue.value = "";
